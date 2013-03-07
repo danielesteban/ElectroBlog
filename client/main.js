@@ -67,10 +67,6 @@ Template.article.date = function() {
     return LIB.formatDay(date) + ' - ' + LIB.formatHour(date);
 };
 
-Template.article.url = function() {
-    return Meteor.absoluteUrl() + this._id;
-};
-
 ARTICLES = {
     get : function() {
         return Articles.find({}, {sort: {createdAt: -1}});
@@ -80,6 +76,15 @@ ARTICLES = {
         Meteor.setTimeout(function() {
             LIB.scrollTo('#article_' + id);
         }, 0);
+    },
+    setImage : function(e, id) {
+        LIB.cancelHandler(e);
+        if(!e.dataTransfer.files[0]) return;
+        var r = new FileReader();
+        r.onload = function(e) {
+            Articles.update({_id: id}, {'$set' : {image: e.target.result} });
+        };
+        r.readAsDataURL(e.dataTransfer.files[0]);
     }
 };
 

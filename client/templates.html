@@ -81,8 +81,7 @@
 		</div>
 		<div class="row">
 			<div class="span4">
-				<img src="{{image}}" class="img-polaroid" onload="$(this).next().css('width', this.width); $(this).next().css('height', this.height); $(this).next().css('marginTop', (this.height + 22) * -1)" />
-				<input type="text" class="img-input" onchange="if(LIB.isLink(this.value)) { Articles.update({_id: '{{_id}}'}, {'$set' : {image: this.value} }); } this.value=''" />
+				<img src="{{image}}" class="img-polaroid" ondragover="return false" ondrop="ARTICLES.setImage(event, '{{_id}}')" />
 			</div>
 			<div class="span8">
 				{{inline body 'Articles' _id 'body' 'p' true}}

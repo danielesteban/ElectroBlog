@@ -1,0 +1,43 @@
+<head>
+	<title></title>
+</head>
+
+<body>
+	<div id="fb-root"></div>
+	<div class="navbar navbar-fixed-top navbar-inverse">
+		<div class="navbar-inner">
+			<a class="brand" onclick="LIB.scrollTo('div.container');">{{config.title}}</a>
+			{{#unless config.setup}}
+			<ul class="nav pull-right">
+				{{#if currentUser}}
+					<li><a onclick="ARTICLES.add()"><i class="icon-plus icon-white"></i> {{L "newArticle"}}</a></li>
+					<li><a onclick="Meteor.logout()">{{L "signout"}}</a></li>
+				{{else}}
+					{{#unless loggingIn}}
+					<li><a onclick="Session.set('signin', !Session.get('signin'))">{{L "admin"}}</a></li>
+					{{/unless}}
+				{{/if}}
+			</ul>
+			{{/unless}}
+		</div>
+	</div>	
+	{{#if config.setup}}
+		{{> setup}}
+	{{else}}
+		<div>
+			{{#if signin}}
+				{{> signin}}
+			{{/if}}
+			{{#each articles}}
+				{{> article}}
+			{{/each}}
+		</div>
+		<div class="pagination navbar navbar-fixed-bottom text-center">
+			<ul>
+				{{#each pagination}}
+					<li><a onmouseover="LIB.scrollTo('#article_{{_id}}', -50)">{{i}}</a></li>
+				{{/each}}
+			</ul>
+		</div>
+	{{/if}}
+</body>

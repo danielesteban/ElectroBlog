@@ -1,0 +1,103 @@
+<template name="setup">
+	<div class="container">
+		<div class="page-header">
+		  <h1>{{L "blogSetup"}}</h1>
+		</div>
+		<div class="row">
+			<div class="span6">
+				<form class="form-horizontal">
+					<div class="control-group">
+						<label class="control-label" for="title">{{L "blogTitle"}}</label>
+						<div class="controls">
+							<input type="text" id="title" placeholder="{{L "title"}}">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="name">{{L "yourName"}}</label>
+						<div class="controls">
+							<input type="text" id="name" placeholder="{{L "fullname"}}">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="user">{{L "adminUsername"}}</label>
+						<div class="controls">
+							<input type="text" id="user" placeholder="{{L "username"}}">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="password">{{L "adminPassword"}}</label>
+						<div class="controls">
+							<input type="password" id="password" placeholder="{{L "password"}}">
+						</div>
+					</div>
+					<div class="control-group">
+						<div class="controls">
+							<button type="submit" class="btn btn-primary">{{L "setup"}}</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="signin">
+	<div id="signin" class="container">
+		<div class="page-header">
+		  <h1>{{L "admin"}}</h1>
+		</div>
+		<div class="row">
+			<div class="span6">
+				<form class="form-horizontal">
+					<div class="control-group">
+						<label class="control-label" for="user">{{L "username"}}</label>
+						<div class="controls">
+							<input type="text" id="user" placeholder="{{L "username"}}">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="password">{{L "password"}}</label>
+						<div class="controls">
+							<input type="password" id="password" placeholder="{{L "password"}}">
+						</div>
+					</div>
+					<div class="control-group">
+						<div class="controls">
+							<button type="submit" class="btn btn-primary">{{L "admin"}}</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="article">
+	<div id="article_{{_id}}" class="container">
+		<div class="page-header">
+			<h1>
+				{{inline title 'Articles' _id 'title'}} {{inline subtitle 'Articles' _id 'subtitle' 'small'}}
+			</h1>
+		</div>
+		<div class="row">
+			<div class="span4">
+				<img src="{{image}}" class="img-polaroid" onload="$(this).next().css('width', this.width); $(this).next().css('height', this.height); $(this).next().css('marginTop', (this.height + 22) * -1)" />
+				<input type="text" class="img-input" onchange="if(LIB.isLink(this.value)) { Articles.update({_id: '{{_id}}'}, {'$set' : {image: this.value} }); } this.value=''" />
+			</div>
+			<div class="span8">
+				{{inline body 'Articles' _id 'body' 'p' true}}
+				<p><small>{{user.profile.name}}<br>{{date}}</small></p>
+				{{#if currentUser}}
+				<div class="btn-group">
+					<button class="btn" onclick="confirm('{{L "areYouSure"}}') &amp;&amp; Articles.remove({_id: '{{_id}}'})"><i class="icon-remove"></i> <small>{{L "removeArticle"}}</small></button>
+					{{#if draft}}
+						<button class="btn" onclick="Articles.update({_id: '{{_id}}'}, {'$unset' : {draft: 1} })"><i class="icon-ok"></i> <small>{{L "publish"}}</small></button>
+					{{else}}
+						<button class="btn" onclick="Articles.update({_id: '{{_id}}'}, {'$set' : {draft: 1} })"><i class="icon-ban-circle"></i> <small>{{L "unpublish"}}</small></button>
+					{{/if}}
+				</ul>
+				{{/if}}
+			</div>
+		</div>
+	</div>
+</template>

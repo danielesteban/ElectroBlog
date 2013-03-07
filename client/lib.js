@@ -44,6 +44,8 @@ LIB = {
     },
     scrollTo : function(selector, xOffset, yOffset) {
         var e = $(selector);
+        xOffset = xOffset || -50;
+        yOffset = yOffset || 0;
         $('html, body').stop().animate({
             scrollTop: e.offset().top + yOffset,
             scrollLeft: e.offset().left + xOffset

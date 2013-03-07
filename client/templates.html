@@ -81,7 +81,15 @@
 		</div>
 		<div class="row">
 			<div class="span4">
-				<img src="{{image}}" class="img-polaroid" ondragover="return false" ondrop="ARTICLES.setImage(event, '{{_id}}')" />
+				{{#if youtube}}
+					<iframe width="380" height="380" src="https://www.youtube.com/embed/{{youtube}}?rel=0&amp;controls=0&amp;showinfo=0&amp;modestbranding=1&amp;hd=1&amp;html5=1" frameborder="0" allowfullscreen></iframe>
+				{{else}}
+					{{#if embed}}
+						{{embed}}
+					{{else}}
+						<img src="{{image}}" class="img-polaroid" ondragover="return false" ondrop="ARTICLES.setImage(event, '{{_id}}')" />
+					{{/if}}
+				{{/if}}
 			</div>
 			<div class="span8">
 				{{inline body 'Articles' _id 'body' 'p' true}}
@@ -94,6 +102,15 @@
 					{{else}}
 						<button class="btn" onclick="Articles.update({_id: '{{_id}}'}, {'$set' : {draft: 1} })"><i class="icon-ban-circle"></i> <small>{{L "unpublish"}}</small></button>
 					{{/if}}
+						<button class="btn dropdown-toggle" data-toggle="dropdown">
+							<i class="icon-camera"></i> <small>{{L "photoVideo"}}</small>
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu">
+							<li class="file">{{L "photo"}} <input type="file" onchange="ARTICLES.setImage(event, '{{_id}}')" /></li>
+							<li><a tabindex="-1" onclick="ARTICLES.setYoutube('{{_id}}', prompt('yt link'))">{{L "add"}} Youtube</a></li>
+							<li><a tabindex="-1" onclick="ARTICLES.setEmbed('{{_id}}', prompt('embed code'))">{{L "add"}} Embed</a></li>
+						</ul>
 				</ul>
 				{{/if}}
 			</div>

@@ -22,4 +22,7 @@ var L_ES = {
 	fullMonths : ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
 	monthDay : "{{weekday}}, {{day}} de {{month}}",
 	fullDate : "{{weekday}}, {{day}} de {{month}} de {{year}}",
+	photoVideo : "Foto/Vídeo",
+	photo : "Foto",
+	add : "Añadir"
 };

@@ -56,11 +56,15 @@ Template.signin.rendered = function() {
 
 Template.article.user = function() {
     return Meteor.users.findOne({_id: this.owner});
-}
+};
 
 Template.article.image = function() {
     return this.image || '/i/no-photo.jpg';
-}
+};
+
+Template.article.embed = function() {
+    return this.embed ? new Handlebars.SafeString(this.embed) : '';
+};
 
 Template.article.date = function() {
     var date = new Date(this.createdAt);
@@ -79,7 +83,7 @@ ARTICLES = {
     },
     setImage : function(e, id) {
         LIB.cancelHandler(e);
-        if(!e.dataTransfer.files[0]) return;
+        if(!e.target.files[0] && !e.dataTransfer.files[0]) return;
         var r = new FileReader();
         r.onload = function(e) {
             var img = $('<img/>')[0];
@@ -118,11 +122,24 @@ ARTICLES = {
                 canvas.width = w;
                 canvas.height = h;
                 ctx.drawImage(img, 0, 0, ow, oh, x, y, img.width, img.height);
-                Articles.update({_id: id}, {'$set' : {image: canvas.toDataURL()}});
+                Articles.update({_id: id}, {'$set' : {image: canvas.toDataURL()}, '$unset' : {embed : 1, youtube: 1}});
             };
             img.src = e.target.result;
         };
-        r.readAsDataURL(e.dataTransfer.files[0]);
+        r.readAsDataURL(e.target.files[0] || e.dataTransfer.files[0]);
+    },
+    setYoutube : function(id, url) {
+        var w = url ? url.indexOf('/watch?v=') : -1;
+        if(w !== -1) {
+            var video_id = url.substr(w + 9),
+                amp = video_id.indexOf('&');
+
+            amp !== -1 && (video_id = video_id.substr(0, amp));
+        }
+        video_id && Articles.update({_id: id}, {'$set' : {youtube: video_id}, '$unset' : {embed: 1, image: 1}});
+    },
+    setEmbed : function(id, url) {
+        url && Articles.update({_id: id}, {'$set' : {embed: url}, '$unset' : {youtube: 1, image: 1}});
     }
 };
 

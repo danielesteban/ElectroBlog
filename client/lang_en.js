@@ -21,5 +21,8 @@ var L_EN = {
 	fullWeekDays : ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
 	fullMonths : ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
 	monthDay : "{{weekday}}, {{month}} {{day}}",
-	fullDate : "{{weekday}}, {{month}} {{day}}, {{year}}"
+	fullDate : "{{weekday}}, {{month}} {{day}}, {{year}}",
+	photoVideo : "Photo/Vídeo",
+	photo : "Photo",
+	add : "Add"
 };

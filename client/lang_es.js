@@ -1,6 +1,6 @@
 var L_ES = {
 	admin : "Admin",
-	newArticle : "Nuevo artículo",
+	addArticle : "Añadir artículo",
 	removeArticle : "Eliminar Artículo",
 	signout : "Cerrar sesión",
 	blogSetup : "Configuración del blog",

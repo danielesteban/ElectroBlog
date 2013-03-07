@@ -10,7 +10,7 @@
 			{{#unless config.setup}}
 			<ul class="nav pull-right">
 				{{#if currentUser}}
-					<li><a onclick="ARTICLES.add()"><i class="icon-plus icon-white"></i> {{L "newArticle"}}</a></li>
+					<li><a onclick="ARTICLES.add()"><i class="icon-plus icon-white"></i> {{L "addArticle"}}</a></li>
 					<li><a onclick="Meteor.logout()">{{L "signout"}}</a></li>
 				{{else}}
 					{{#unless loggingIn}}

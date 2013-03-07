@@ -1,6 +1,6 @@
 var L_EN = {
 	admin : "Admin",
-	newArticle : "New article",
+	addArticle : "Add article",
 	removeArticle : "Remove Article",
 	signout : "Sign out",
 	blogSetup : "Blog setup",

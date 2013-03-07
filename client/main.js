@@ -79,11 +79,11 @@ ARTICLES = {
         var id = Articles.insert({owner: Meteor.userId(), draft: 1});
         Meteor.setTimeout(function() {
             LIB.scrollTo('#article_' + id);
-        }, 150);
+        }, 250);
     },
     setImage : function(e, id) {
         LIB.cancelHandler(e);
-        if(!e.target.files[0] && !e.dataTransfer.files[0]) return;
+        if((e.target.files && !e.target.files[0]) && !e.dataTransfer.files[0]) return;
         var r = new FileReader();
         r.onload = function(e) {
             var img = $('<img/>')[0];
@@ -98,7 +98,6 @@ ARTICLES = {
                     oh = img.height,
                     dSrc = img.width / img.height,
                     dDst = w / h;
-
 
                if(dSrc < dDst) {
                     if(img.width < w) {
@@ -126,7 +125,7 @@ ARTICLES = {
             };
             img.src = e.target.result;
         };
-        r.readAsDataURL(e.target.files[0] || e.dataTransfer.files[0]);
+        r.readAsDataURL(e.target.files ? e.target.files[0] : e.dataTransfer.files[0]);
     },
     setYoutube : function(id, url) {
         var w = url ? url.indexOf('/watch?v=') : -1;

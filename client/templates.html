@@ -102,15 +102,15 @@
 					{{else}}
 						<button class="btn" onclick="Articles.update({_id: '{{_id}}'}, {'$set' : {draft: 1} })"><i class="icon-ban-circle"></i> <small>{{L "unpublish"}}</small></button>
 					{{/if}}
-						<button class="btn dropdown-toggle" data-toggle="dropdown">
-							<i class="icon-camera"></i> <small>{{L "photoVideo"}}</small>
-							<span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu">
-							<li class="file">{{L "photo"}} <input type="file" onchange="ARTICLES.setImage(event, '{{_id}}')" /></li>
-							<li><a tabindex="-1" onclick="ARTICLES.setYoutube('{{_id}}', prompt('yt link'))">{{L "add"}} Youtube</a></li>
-							<li><a tabindex="-1" onclick="ARTICLES.setEmbed('{{_id}}', prompt('embed code'))">{{L "add"}} Embed</a></li>
-						</ul>
+					<button class="btn dropdown-toggle" data-toggle="dropdown">
+						<i class="icon-camera"></i> <small>{{L "photoVideo"}}</small>
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu">
+						<li class="file">{{L "photo"}} <input type="file" onchange="ARTICLES.setImage(event, '{{_id}}')" /></li>
+						<li><a tabindex="-1" onclick="ARTICLES.setYoutube('{{_id}}', prompt('yt link'))">{{L "add"}} Youtube</a></li>
+						<li><a tabindex="-1" onclick="ARTICLES.setEmbed('{{_id}}', prompt('embed code'))">{{L "add"}} Embed</a></li>
+					</ul>
 				</ul>
 				{{/if}}
 			</div>

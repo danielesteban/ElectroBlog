@@ -59,7 +59,7 @@ Template.article.user = function() {
 }
 
 Template.article.image = function() {
-    return this.image || 'http://dribbble.s3.amazonaws.com/users/22251/screenshots/803201/no-photo-grey.png';
+    return this.image || '/i/no-photo.jpg';
 }
 
 Template.article.date = function() {
@@ -82,7 +82,45 @@ ARTICLES = {
         if(!e.dataTransfer.files[0]) return;
         var r = new FileReader();
         r.onload = function(e) {
-            Articles.update({_id: id}, {'$set' : {image: e.target.result} });
+            var img = $('<img/>')[0];
+            img.onload = function(e) {
+                var canvas = $('<canvas/>')[0],
+                    ctx = canvas.getContext('2d'),
+                    w = IMAGE_CROP_WIDTH,
+                    h = IMAGE_CROP_HEIGHT,
+                    x = 0,
+                    y = 0,
+                    ow = img.width,
+                    oh = img.height,
+                    dSrc = img.width / img.height,
+                    dDst = w / h;
+
+
+               if(dSrc < dDst) {
+                    if(img.width < w) {
+                        h = h * img.width / w;
+                        w = img.width;
+                    }
+                    img.width = w;
+                    img.height = oh * w / ow;
+                    y = -(img.height - h) / 2;
+                } else {                        
+                    if(img.height < h) {
+                        w = w * img.height / h;
+                        h = img.height;
+                    }
+                    console.log(ow, oh);
+                    
+                    img.height = h;
+                    img.width = ow * h / oh;
+                    x = -(img.width - w) / 2;
+                }           
+                canvas.width = w;
+                canvas.height = h;
+                ctx.drawImage(img, 0, 0, ow, oh, x, y, img.width, img.height);
+                Articles.update({_id: id}, {'$set' : {image: canvas.toDataURL()}});
+            };
+            img.src = e.target.result;
         };
         r.readAsDataURL(e.dataTransfer.files[0]);
     }

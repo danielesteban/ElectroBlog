@@ -75,7 +75,7 @@ ARTICLES = {
         var id = Articles.insert({owner: Meteor.userId(), draft: 1});
         Meteor.setTimeout(function() {
             LIB.scrollTo('#article_' + id);
-        }, 100);
+        }, 150);
     },
     setImage : function(e, id) {
         LIB.cancelHandler(e);

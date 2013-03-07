@@ -18,16 +18,23 @@ LIB = {
         }
     },
     inlineOnBlur : function(e, collection, id, field) {
-        var set = {},
-            value = $(e.target).html();
+        var t = $(e.target),
+            value = t.html(),
+            set = {};
 
         set[field] = value.replace(/<div>/g, "\n").replace(/<\/div>/g, "").replace(/<br>/g, "\n");
         collection.update({_id: id}, {'$set' : set});
-        $(e.target).html(LIB.parseLinks(value));
+        if(value !== '') t.html(LIB.parseLinks(value));
+        else {
+            var ph = t.attr('placeholder');
+            ph !== '' && $(e.target).text(ph);
+        }
     },
     inlineOnFocus : function(e) {
-        var val = $(e.target).attr('value');
-        val !== '' && $(e.target).html(val);
+        var t = $(e.target),
+            val = t.attr('value');
+        
+        t.html(val);
     },
     isLink : function(text) {
         return text.match(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/i);

@@ -27,7 +27,7 @@ Handlebars.registerHelper('inline', function(text, collection, id, field, tag, m
     text = LIB.escapeHTML(text);
     multiline === true && (text = text.replace(/\n/g, '<br>'));
     typeof tag !== 'string' && (tag = 'span');
-    return new Handlebars.SafeString('<' + tag + ' ' + (Meteor.userId() ? 'contenteditable="true" onblur="LIB.inlineOnBlur(event, ' + collection + ', \'' + id + '\', \'' + field + '\')" onkeydown="LIB.inlineOnKeyDown(event)" onfocus="LIB.inlineOnFocus(event)" value="' + text + '"' : '') + (multiline === true ? ' multiline="true"' : '') + '>' + (Meteor.userId() && text === '' ? Session.get("L")[field] : LIB.parseLinks(text)) + '</' + tag + '>');
+    return new Handlebars.SafeString('<' + tag + ' ' + (Meteor.userId() ? 'contenteditable="true" onblur="LIB.inlineOnBlur(event, ' + collection + ', \'' + id + '\', \'' + field + '\')" onkeydown="LIB.inlineOnKeyDown(event)" onfocus="LIB.inlineOnFocus(event)" value="' + text + '"' : '') + (multiline === true ? ' multiline="true"' : '') + (Meteor.userId() && text === '' ? ' placeholder="' + Session.get("L")[field] + '"' : '') + '>' + (Meteor.userId() && text === '' ? Session.get("L")[field] : LIB.parseLinks(text)) + '</' + tag + '>');
 });
 
 Template.setup.events({
